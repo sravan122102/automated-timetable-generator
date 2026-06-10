@@ -1,9 +1,14 @@
 import os
+import sys
+
+# Add root directory to sys.path so we can import from root
+sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from models import db, User, Teacher, TeacherAvailability, Subject, Classroom, ClassGroup, Assignment, TimeSlot, TimetableEntry
 from scheduler import generate_timetable
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 import jwt
 import datetime
 
@@ -12,10 +17,12 @@ app = Flask(__name__)
 CORS(app)
 
 # Database Configuration
-basedir = os.path.abspath(os.path.dirname(__file__))
-# Fallback to local SQLite if DATABASE_URL is not set (e.g. local dev)
-database_url = os.environ.get('DATABASE_URL', 'sqlite:///' + os.path.join(basedir, 'database.db'))
-# Render Postgres URLs start with postgres:// but SQLAlchemy requires postgresql://
+# Fallback to local SQLite if DATABASE_URL is not set
+# Use /tmp for Vercel's read-only filesystem if running as serverless without Postgres
+default_db_path = '/tmp/database.db' if os.environ.get('VERCEL') else os.path.join(os.path.abspath(os.path.dirname(__file__)), 'database.db')
+database_url = os.environ.get('DATABASE_URL', 'sqlite:///' + default_db_path)
+
+# Render/Neon Postgres URLs start with postgres:// but SQLAlchemy requires postgresql://
 if database_url.startswith("postgres://"):
     database_url = database_url.replace("postgres://", "postgresql://", 1)
     
@@ -24,6 +31,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SECRET_KEY'] = 'your_secret_key_here'
 
 db.init_app(app)
+
+# Ensure database tables and default admin exist before requests
+with app.app_context():
+    db.create_all()
+    if not User.query.filter_by(username='admin').first():
+        db.session.add(User(username='admin', password_hash=generate_password_hash('password123')))
+    
+    if TimeSlot.query.count() == 0:
+        days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+        for day in days:
+            for period in range(1, 9):
+                db.session.add(TimeSlot(day_of_week=day, period_number=period, is_lunch_break=(period == 5)))
+    
+    db.session.commit()
+
 
 # --- AUTHENTICATION ---
 @app.route('/api/login', methods=['POST'])
