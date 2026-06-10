@@ -1,0 +1,55 @@
+<header>
+    <h1>Subjects Management</h1>
+    <div class="header-actions">
+        <button class="btn btn-primary" onclick="openModal('addSubjectModal')">
+            <i class="fa-solid fa-plus"></i> Add Subject
+        </button>
+    </div>
+</header>
+
+<div class="card">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Weekly Hours</th>
+                    <th>Requires Lab</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="subjects-table-body">
+                <!-- Data populated via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="addSubjectModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Add Subject</h2>
+            <button class="btn-icon" onclick="closeModal('addSubjectModal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="add-subject-form" onsubmit="handleAddSubject(event)">
+            <div class="form-group">
+                <label for="subject-name">Name</label>
+                <input type="text" id="subject-name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="subject-hours">Weekly Hours</label>
+                <input type="number" id="subject-hours" class="form-control" min="1" max="10" required>
+            </div>
+            <div class="form-group checkbox-group">
+                <input type="checkbox" id="subject-lab">
+                <label for="subject-lab" style="margin-bottom: 0;">Requires Lab (Consecutive Periods)</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('addSubjectModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

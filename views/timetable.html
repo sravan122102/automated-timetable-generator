@@ -1,0 +1,34 @@
+<header>
+    <h1>View Timetable</h1>
+    <div class="header-actions">
+        <button class="btn btn-secondary" onclick="exportToPDF()">
+            <i class="fa-solid fa-file-pdf"></i> Export to PDF
+        </button>
+    </div>
+</header>
+
+<div class="card" style="margin-bottom: 24px;">
+    <div style="display: flex; gap: 16px; align-items: flex-end;">
+        <div class="form-group" style="margin-bottom: 0; flex: 1;">
+            <label for="view-class-select">Select Class</label>
+            <select id="view-class-select" class="form-control" onchange="loadClassTimetable()">
+                <option value="">-- Select --</option>
+            </select>
+        </div>
+        <div style="padding: 12px; font-weight: 600;">OR</div>
+        <div class="form-group" style="margin-bottom: 0; flex: 1;">
+            <label for="view-teacher-select">Select Teacher</label>
+            <select id="view-teacher-select" class="form-control" onchange="loadTeacherTimetable()">
+                <option value="">-- Select --</option>
+            </select>
+        </div>
+    </div>
+</div>
+
+<div class="card" id="timetable-export-area">
+    <h2 id="timetable-title" style="margin-bottom: 24px; text-align: center;">Select a class or teacher to view</h2>
+    
+    <div class="timetable-grid" id="timetable-grid">
+        <!-- Grid will be populated by JS -->
+    </div>
+</div>

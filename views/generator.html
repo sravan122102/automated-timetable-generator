@@ -1,0 +1,22 @@
+<header>
+    <h1>Timetable Generator</h1>
+</header>
+
+<div class="card" style="max-width: 600px;">
+    <p style="margin-bottom: 24px; color: var(--text-muted);">
+        Run the greedy scheduling algorithm to generate timetables. You can generate for a specific class or for all classes at once.
+    </p>
+    
+    <div class="form-group">
+        <label for="generate-class">Select Class (Leave blank for all)</label>
+        <select id="generate-class" class="form-control">
+            <option value="">-- All Classes --</option>
+        </select>
+    </div>
+    
+    <button class="btn btn-primary" onclick="handleGenerate()" id="btn-generate">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Generate Timetable
+    </button>
+    
+    <div id="generate-result" style="margin-top: 16px; font-weight: 500;"></div>
+</div>

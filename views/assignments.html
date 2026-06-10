@@ -1,0 +1,55 @@
+<header>
+    <h1>Assignments</h1>
+    <div class="header-actions">
+        <button class="btn btn-primary" onclick="openModal('addAssignmentModal')">
+            <i class="fa-solid fa-plus"></i> Assign Subject to Teacher
+        </button>
+    </div>
+</header>
+
+<div class="card">
+    <p style="margin-bottom: 16px; color: var(--text-muted);">Assign teachers to specific subjects for specific classes.</p>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Class</th>
+                    <th>Subject</th>
+                    <th>Teacher</th>
+                </tr>
+            </thead>
+            <tbody id="assignments-table-body">
+                <!-- Data populated via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="addAssignmentModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>New Assignment</h2>
+            <button class="btn-icon" onclick="closeModal('addAssignmentModal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="add-assignment-form" onsubmit="handleAddAssignment(event)">
+            <div class="form-group">
+                <label for="assign-class">Class</label>
+                <select id="assign-class" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label for="assign-subject">Subject</label>
+                <select id="assign-subject" class="form-control" required></select>
+            </div>
+            <div class="form-group">
+                <label for="assign-teacher">Teacher</label>
+                <select id="assign-teacher" class="form-control" required></select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('addAssignmentModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>

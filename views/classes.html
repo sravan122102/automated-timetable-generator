@@ -1,0 +1,45 @@
+<header>
+    <h1>Classes Management</h1>
+    <div class="header-actions">
+        <button class="btn btn-primary" onclick="openModal('addClassModal')">
+            <i class="fa-solid fa-plus"></i> Add Class
+        </button>
+    </div>
+</header>
+
+<div class="card">
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="classes-table-body">
+                <!-- Data populated via JS -->
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="addClassModal">
+    <div class="modal">
+        <div class="modal-header">
+            <h2>Add Class</h2>
+            <button class="btn-icon" onclick="closeModal('addClassModal')"><i class="fa-solid fa-xmark"></i></button>
+        </div>
+        <form id="add-class-form" onsubmit="handleAddClass(event)">
+            <div class="form-group">
+                <label for="class-name">Name (e.g. II BCA A)</label>
+                <input type="text" id="class-name" class="form-control" required>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="closeModal('addClassModal')">Cancel</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+</div>
